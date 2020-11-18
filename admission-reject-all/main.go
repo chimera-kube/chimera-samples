@@ -17,7 +17,7 @@ const (
 )
 
 var (
-	admissionHost = os.Getenv("ADMISSION_CALLBACK_HOST")
+	admissionHost = os.Getenv("AW_CALLBACK_HOST")
 )
 
 func main() {
