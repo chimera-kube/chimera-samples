@@ -29,7 +29,7 @@ func main() {
 			{
 				Rules: []admissionregistrationv1.RuleWithOperations{
 					{
-						Operations: []admissionregistrationv1.OperationType{"*"},
+						Operations: []admissionregistrationv1.OperationType{admissionregistrationv1.OperationAll},
 						Rule: admissionregistrationv1.Rule{
 							APIGroups:   []string{"*"},
 							APIVersions: []string{"v1"},
