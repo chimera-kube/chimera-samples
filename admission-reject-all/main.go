@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/chimera-kube/chimera/pkg/chimera"
+	"github.com/chimera-kube/chimera-admission-library/pkg/chimera"
 
 	admissionv1 "k8s.io/api/admission/v1"
 	admissionregistrationv1 "k8s.io/api/admissionregistration/v1"

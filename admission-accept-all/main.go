@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/chimera-kube/chimera/pkg/chimera"
+	"github.com/chimera-kube/chimera-admission-library/pkg/chimera"
 
 	admissionregistrationv1 "k8s.io/api/admissionregistration/v1"
 )
