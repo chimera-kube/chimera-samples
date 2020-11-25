@@ -1,8 +1,8 @@
 # chimera-samples
 
-`chimera-samples` is a collection of examples using the [`chimera`
-library](https://github.com/chimera-kube/chimera) to write admission
-webhooks.
+`chimera-samples` is a collection of examples using the
+[`chimera-admission-library`](https://github.com/chimera-kube/chimera-admission-library)
+to write admission webhooks.
 
 The following examples can be found in this project:
 
