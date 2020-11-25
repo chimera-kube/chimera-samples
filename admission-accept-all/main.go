@@ -15,27 +15,29 @@ const (
 )
 
 var (
-	admissionHost = os.Getenv("AW_CALLBACK_HOST")
+	admissionHost = os.Getenv("CHIMERA_SAMPLES_CALLBACK_HOST")
 )
 
 func main() {
-	err := chimera.StartServer(
-		admissionName,
-		admissionHost,
-		admissionPort,
-		[]chimera.Webhook{
-			{
-				Rules: []admissionregistrationv1.RuleWithOperations{
-					{
-						Operations: []admissionregistrationv1.OperationType{admissionregistrationv1.OperationAll},
-						Rule: admissionregistrationv1.Rule{
-							APIGroups:   []string{"*"},
-							APIVersions: []string{"v1"},
-							Resources:   []string{"*"},
+	err := chimera.StartTLSServer(
+		chimera.AdmissionConfig{
+			Name:         admissionName,
+			CallbackHost: admissionHost,
+			CallbackPort: admissionPort,
+			Webhooks: chimera.WebhookList{
+				{
+					Rules: []admissionregistrationv1.RuleWithOperations{
+						{
+							Operations: []admissionregistrationv1.OperationType{admissionregistrationv1.OperationAll},
+							Rule: admissionregistrationv1.Rule{
+								APIGroups:   []string{"*"},
+								APIVersions: []string{"v1"},
+								Resources:   []string{"*"},
+							},
 						},
 					},
+					Callback: chimera.AllowRequest,
 				},
-				Callback: chimera.AllowRequest,
 			},
 		},
 	)
