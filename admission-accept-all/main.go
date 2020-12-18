@@ -19,29 +19,27 @@ var (
 )
 
 func main() {
-	err := chimera.StartTLSServer(
-		chimera.AdmissionConfig{
-			Name:         admissionName,
-			CallbackHost: admissionHost,
-			CallbackPort: admissionPort,
-			Webhooks: chimera.WebhookList{
-				{
-					Rules: []admissionregistrationv1.RuleWithOperations{
-						{
-							Operations: []admissionregistrationv1.OperationType{admissionregistrationv1.OperationAll},
-							Rule: admissionregistrationv1.Rule{
-								APIGroups:   []string{"*"},
-								APIVersions: []string{"v1"},
-								Resources:   []string{"*"},
-							},
+	config := chimera.AdmissionConfig{
+		Name:         admissionName,
+		CallbackHost: admissionHost,
+		CallbackPort: admissionPort,
+		Webhooks: chimera.WebhookList{
+			{
+				Rules: []admissionregistrationv1.RuleWithOperations{
+					{
+						Operations: []admissionregistrationv1.OperationType{admissionregistrationv1.OperationAll},
+						Rule: admissionregistrationv1.Rule{
+							APIGroups:   []string{"*"},
+							APIVersions: []string{"v1"},
+							Resources:   []string{"*"},
 						},
 					},
-					Callback: chimera.AllowRequest,
 				},
+				Callback: chimera.AllowRequest,
 			},
 		},
-	)
-	if err != nil {
+	}
+	if err := chimera.StartTLSServer(&config); err != nil {
 		log.Fatal(err)
 	}
 }

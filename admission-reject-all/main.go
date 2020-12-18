@@ -21,31 +21,29 @@ var (
 )
 
 func main() {
-	err := chimera.StartTLSServer(
-		chimera.AdmissionConfig{
-			Name:         admissionName,
-			CallbackHost: admissionHost,
-			CallbackPort: admissionPort,
-			Webhooks: chimera.WebhookList{
-				{
-					Rules: []admissionregistrationv1.RuleWithOperations{
-						{
-							Operations: []admissionregistrationv1.OperationType{admissionregistrationv1.OperationAll},
-							Rule: admissionregistrationv1.Rule{
-								APIGroups:   []string{"*"},
-								APIVersions: []string{"v1"},
-								Resources:   []string{"*"},
-							},
+	config := chimera.AdmissionConfig{
+		Name:         admissionName,
+		CallbackHost: admissionHost,
+		CallbackPort: admissionPort,
+		Webhooks: chimera.WebhookList{
+			{
+				Rules: []admissionregistrationv1.RuleWithOperations{
+					{
+						Operations: []admissionregistrationv1.OperationType{admissionregistrationv1.OperationAll},
+						Rule: admissionregistrationv1.Rule{
+							APIGroups:   []string{"*"},
+							APIVersions: []string{"v1"},
+							Resources:   []string{"*"},
 						},
 					},
-					Callback: func(*admissionv1.AdmissionRequest) (chimera.WebhookResponse, error) {
-						return chimera.NewRejectRequest().WithCode(http.StatusTeapot).WithMessage("Very small, but still -- a teapot"), nil
-					},
+				},
+				Callback: func(*admissionv1.AdmissionRequest) (chimera.WebhookResponse, error) {
+					return chimera.NewRejectRequest().WithCode(http.StatusTeapot).WithMessage("Very small, but still -- a teapot"), nil
 				},
 			},
 		},
-	)
-	if err != nil {
+	}
+	if err := chimera.StartTLSServer(&config); err != nil {
 		log.Fatal(err)
 	}
 }
